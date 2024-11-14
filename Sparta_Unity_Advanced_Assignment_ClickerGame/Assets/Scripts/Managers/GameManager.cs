@@ -10,7 +10,9 @@ public class GameManager : MonoBehaviour
 
     public static UIManager uiManager;
 
-    public event Action<int> OnTouchEvent;
+    public Character character;
+
+    public event Action OnTouchEvent;
 
     private void Awake()
     {
@@ -38,6 +40,6 @@ public class GameManager : MonoBehaviour
     public void OnAttack()
     {
         Debug.Log("버튼누르면 공격");
-        OnTouchEvent?.Invoke(20);
+        OnTouchEvent?.Invoke();
     }
 }

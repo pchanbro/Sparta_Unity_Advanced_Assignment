@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class UIGameInfo : MonoBehaviour
 {
+    private CharacterStat characterStat;
+
     [SerializeField]
     private GameInfo enemyHP;
     public GameInfo EnemyHP
@@ -36,6 +38,8 @@ public class UIGameInfo : MonoBehaviour
 
     private void Start()
     {
+        characterStat = GameManager.Instance.character.stat;
+
         GameManager.Instance.OnTouchEvent += GetGold;
         GameManager.Instance.OnTouchEvent += GetScore;
         GameManager.Instance.OnTouchEvent += OnDamage;
@@ -48,18 +52,18 @@ public class UIGameInfo : MonoBehaviour
         goldValue.text = gold.curValue.ToString();
     }
 
-    private void GetGold(int amount)
+    private void GetGold()
     {
-        gold.curValue = Mathf.Min(gold.curValue + amount, gold.maxValue);
+        gold.curValue = Mathf.Min(gold.curValue + characterStat.getGoldAmount, gold.maxValue);
     }
 
-    private void GetScore(int amount)
+    private void GetScore()
     {
-        score.curValue = Mathf.Min(score.curValue + amount, score.maxValue);
+        score.curValue = Mathf.Min(score.curValue + characterStat.getScoreAmount, score.maxValue);
     }
 
-    private void OnDamage(int amount)
+    private void OnDamage()
     {
-        enemyHP.curValue = Mathf.Max(enemyHP.curValue - amount, enemyHP.minValue);
+        enemyHP.curValue = Mathf.Max(enemyHP.curValue - characterStat.damage, enemyHP.minValue);
     }
 }
